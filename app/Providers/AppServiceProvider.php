@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             $router->forPersonalAccessTokens();
             $router->forTransientTokens();
         });
-        Passport::tokensExpireIn(now()->addMinutes(1));
+        Passport::tokensExpireIn(now()->addDays(1));
         Passport::refreshTokensExpireIn(now()->addDays(2));
         Passport::personalAccessTokensExpireIn(now()->addDays(7));
     }
