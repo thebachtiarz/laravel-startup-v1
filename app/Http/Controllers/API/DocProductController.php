@@ -18,7 +18,7 @@ class DocProductController extends Controller
     public function index()
     {
         $products = DocumentationProduct::where('code', '=', auth()->user()->code)->get();
-        return response()->json(successResponse('Products retrieved successfully.' . auth()->user()->code, ProductResource::collection($products)), 200);
+        return response()->json(successResponse('Products retrieved successfully.', ProductResource::collection($products)), 200);
     }
 
     /**
@@ -63,7 +63,7 @@ class DocProductController extends Controller
         if (is_null($product)) {
             return response()->json(errorResponse('Product not found.'), 200);
         }
-        return response()->json(successResponse('Product retrieved successfully.' . auth()->user()->code, new ProductResource($product)), 200);
+        return response()->json(successResponse('Product retrieved successfully.', new ProductResource($product)), 200);
     }
 
     /**
@@ -95,7 +95,7 @@ class DocProductController extends Controller
         }
         $updateProduct = DocumentationProduct::where([['id', '=', $id], ['code', '=', auth()->user()->code]])->update($request->all());
         if ($updateProduct) {
-            return response()->json(successResponse('Successfully updated product.', new ProductResource($updateProduct)), 200);
+            return response()->json(successResponse('Successfully updated product.', new ProductResource(DocumentationProduct::find($id))), 200);
         }
         return response()->json(errorResponse('Failed to update product'), 200);
     }

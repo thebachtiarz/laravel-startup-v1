@@ -16,10 +16,15 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::group(['middleware' => ['preventBackHistory']], function () {
+    Route::post('/register', 'API\AuthController@registerNewUser');
+    Route::post('/signin', 'API\AuthController@signupUser');
+});
 
-Route::post('/register', 'API\AuthController@registerNewUser');
-Route::post('/signup', 'API\AuthController@signupUser');
-
-Route::middleware('auth:api')->group(function () {
+Route::group(['middleware' => ['preventBackHistory', 'auth:api']], function () {
     Route::resource('/doc-products', 'API\DocProductController');
 });
+
+
+
+// Route::group(['middleware' => ['preventBackHistory', 'auth:api']], function () { });

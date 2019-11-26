@@ -1,12 +1,51 @@
 <?php
 
 /**
- * use library
+ * use libraries
  */
 
 use Illuminate\Support\Str;
 
+/**
+ * use models
+ *
+ * @return void
+ */
+
+use App\Models\User;
+
 /** */
+
+/**
+ * handler template theme asset
+ *
+ * @return void
+ */
+# online version
+function online_asset()
+{
+    return 'https://bachtiarswebsitecoltd.net/AdminLTE-3.0.0-rc.1';
+}
+# offline version
+function offline_asset()
+{
+    return asset('AdminLTE-3.0.0-rc.1');
+}
+
+/**
+ * get user name by code
+ *
+ * @param string $code
+ * @return void
+ */
+function getUserNameByCode($code = '')
+{
+    if ($code) {
+        $user = User::select(['name'])->where('code', '=', $code)->first();
+        return ($user) ? $user['name'] : NULL;
+    }
+    return NULL;
+}
 
 /**
  * response status
