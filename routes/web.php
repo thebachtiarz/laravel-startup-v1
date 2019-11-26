@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/signin', function () {
+    return response()->json(infoResponse('This is login page, if you looking this, please login first'), 200);
+})->name('page.auth.signin');
