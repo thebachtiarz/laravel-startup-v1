@@ -12,7 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect('/signin');
 });
 
-Route::get('/signin', 'Auth\LoginController@userLogin')->name('page.auth.signin');
+Route::group(['middleware' => ['preventBackHistory']], function () {
+    Route::get('/signin', 'Auth\LoginController@userLogin')->name('page.auth.signin');
+    Route::get('/register', 'Auth\LoginController@newUser')->name('page.auth.register');
+    Route::get('/home', 'API\HomeController@homepage');
+});
+
+// Route::group(['middleware' => ['preventBackHistory', 'auth:api']], function () { });

@@ -21,6 +21,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(errorResponse('Validation error, please check your credentials.'), 200);
         }
+        $checkUser = User::where('email', '=', $post->email)->first();
+        if ($checkUser) {
+            return response()->json(errorResponse('Account has been registered, if you forget your password, please click forgot password.'), 200);
+        }
         $newUser = User::create([
             'status' => 'testuser',
             'name' => ucwords($post->name),
