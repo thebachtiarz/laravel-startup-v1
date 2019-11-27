@@ -14,13 +14,5 @@
 
 @section('footer')
 <script src="/js/app/master/credentials_checker.min.js"></script>
-<script>
-    $(checkCredentials());
-    // axios.get(`/api/doc-products`, {
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Authorization': `Bearer ${localStorage.getItem('_jwtApiToken')}`
-    //     }
-    // }).then(response => console.log(response.data)).catch(error => toastWarning(error));
-</script>
+<script src="/js/app/body/home/homepage.min.js"></script>
 @endsection
