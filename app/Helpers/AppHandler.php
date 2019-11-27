@@ -33,6 +33,16 @@ function offline_asset()
 }
 
 /**
+ * icon apps
+ *
+ * @return void
+ */
+function icon_title()
+{
+    return offline_asset() . '/dist/img/AdminLTELogo.png';
+}
+
+/**
  * get user name by code
  *
  * @param string $code

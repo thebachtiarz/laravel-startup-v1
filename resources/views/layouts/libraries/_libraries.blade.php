@@ -1,5 +1,5 @@
 @if('_lib')
 @foreach($_lib as $key => $library)
-@include("layouts.includes.$library")
+@include("layouts.libraries.$library")
 @endforeach
 @endif
