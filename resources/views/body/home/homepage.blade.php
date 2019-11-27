@@ -15,4 +15,7 @@
 @section('footer')
 <script src="/js/app/master/credentials_checker.min.js"></script>
 <script src="/js/app/body/home/homepage.min.js"></script>
+<script>
+    //
+</script>
 @endsection
