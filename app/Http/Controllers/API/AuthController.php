@@ -19,7 +19,7 @@ class AuthController extends Controller
             'c_password' => 'required|same:password',
         ]);
         if ($validator->fails()) {
-            return response()->json(errorResponse('validation error, check your credentials'), 200);
+            return response()->json(errorResponse('Validation error, please check your credentials.'), 200);
         }
         $newUser = User::create([
             'status' => 'testuser',
@@ -45,7 +45,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(errorResponse('validation error, check your credentials'), 200);
+            return response()->json(errorResponse('Validation error, please check your credentials.'), 200);
         }
 
         if (Auth::attempt(['email' => $post->email, 'password' => $post->password])) {

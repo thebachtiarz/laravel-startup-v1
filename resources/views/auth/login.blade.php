@@ -20,13 +20,20 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
     <script src="{{ online_asset() }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     @include('layouts.libraries._libraries', ['_lib' => ['_forgejs', '_toasterjs']])
+    <script src="/js/app/master/credentials_checker.min.js"></script>
     <script>
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
         const checkAuth = async () => {
             let token = localStorage.getItem('_jwtApiToken');
             await sleep(2000);
-            token ? (toastSuccess('Automatically Login, please wait...'), redirectTo('/home')) : '';
+            // cek apakah token falid
+            axios.get(`/api/user-credentials`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('_jwtApiToken')}`
+                    }
+                })
+                .then(response => ($('#login-head-message').html('<label class="text-success">Automatically Login, please wait...</label>'), redirectTo('/api/home')))
+                .catch(error => toastWarning(error));
         }
 
         $(document).on('keyup', '#password', function(e) {
@@ -40,23 +47,20 @@
             let email = $('#email').val();
             let password = $('#password').val();
             if (email && password) {
-                submitLogin(email, password)
-            } else {
-                //
+                submitLogin(email, password);
+                $('#email-form').removeClass('mb-1'), $('#email-form').addClass('mb-3'), $('#email-warn').hide();
+                $('#password-form').removeClass('mb-1'), $('#password-form').addClass('mb-3'), $('#password-warn').hide();
+            }
+            if (!email) {
+                $('#email-form').removeClass('mb-3'), $('#email-form').addClass('mb-1'), $('#email-warn').show()
+            }
+            if (!password) {
+                $('#password-form').removeClass('mb-3'), $('#password-form').addClass('mb-1'), $('#password-warn').show()
             }
         });
 
         const createLoginForm = () => {
-            let loginForm = `<div class="login-box">
-            <div class="login-logo">
-            <a href="/" class="text-white" style="font-size: 40px; opacity: .8;"><b>Laravel</b> Startup</a>
-            </div>
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-            <div class="card-body login-card-body"><p class="login-box-msg">Sign in to start your session</p>
-            <div class="input-group mb-3"><input type="email" id="email" class="form-control" placeholder="Email@mail.com">
-            <div class="input-group-append"><div class="input-group-text"><span class="fas fa-envelope"></span></div>
-            </div>&nbsp;<p class="mtmin">Test</p></div>
-            <div class="input-group mb-3"><input type="password" class="form-control" id="password" placeholder="Password"><div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div></div><div class="row"><div class="col-7"><div class="icheck-primary"><input type="checkbox" id="remember"><label for="remember">Remember Me</label></div></div><div class="col-5"><button class="btn btn-primary btn-block btn-flat text-bold" id="submitLogin"><i class="fas fa-sign-in-alt"></i>&ensp;Sign In</button></div></div><p class="mb-1"><a href="/lost_password">I forgot my password</a></p><p class="mb-0"><a href="/register" class="text-center">Register a new membership</a></p></div></div></div>`;
+            let loginForm = `<div class="login-box"><div class="login-logo"><a href="/" class="text-white" style="font-size: 40px; opacity: .8;"><b>Laravel</b> Startup</a></div><div class="card shadow-lg p-3 mb-5 bg-white rounded"><div class="card-body login-card-body"><p class="login-box-msg" id="login-head-message">Sign in to start your session</p><div class="form-groupt"><div class="input-group mb-3" id="email-form"><input type="email" id="email" class="form-control" placeholder="Email@mail.com"><div class="input-group-append"><div class="input-group-text"><span class="fas fa-envelope"></span></div></div></div><label class="text-danger" id="email-warn" style="display: none;">Email incorrect</label></div><div class="form-groupt"><div class="input-group mb-3" id="password-form"><input type="password" class="form-control" id="password" placeholder="Password"><div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div></div><label class="text-danger" id="password-warn" style="display: none;">Password incorrect</label></div><div class="row"><div class="col-7"><div class="icheck-primary"><input type="checkbox" id="remember"><label for="remember">Remember Me</label></div></div><div class="col-5"><button class="btn btn-primary btn-block btn-flat text-bold" id="submitLogin"><i class="fas fa-sign-in-alt"></i>&ensp;Sign In</button></div></div><p class="mb-1"><a href="/lost_password">I forgot my password</a></p><p class="mb-0"><a href="/register" class="text-center">Register a new membership</a></p></div></div></div>`;
             $('#view-login-page').html(loginForm);
         }
 
@@ -75,19 +79,13 @@
         }
 
         const responseLogin = async (data) => {
-            console.log(data);
             if (data.status == 'success') {
-                toastSuccess('Successfully Login, please wait...');
+                $('#login-head-message').html('<label class="text-success">Successfully Login, please wait...</label>');
                 localStorage.setItem('_jwtApiToken', data.response_data[0].token);
-                redirectTo('/home');
+                redirectTo('/api/home');
             } else {
-                toastWarning(data.message);
+                $('#login-head-message').html(`<label class="text-danger">${data.message}</label>`);
             }
-        }
-
-        const redirectTo = async (url) => {
-            await sleep(3000);
-            $(location).attr('href', url);
         }
 
         $(createLoginForm(), checkAuth());
