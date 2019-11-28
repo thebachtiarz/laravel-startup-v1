@@ -37,7 +37,7 @@
     <script src="{{ online_asset() }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{{ online_asset() }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="{{ online_asset() }}/dist/js/adminlte.min.js"></script>
-    <script src="/js/app/master/master_home.min.js" defer></script>
+    <script async src="/js/app/master/master_home.min.js"></script>
     @include('layouts.libraries._libraries', ['_lib' => ['_toasterjs']])
     @yield('footer')
     <!-- </body></html> -->

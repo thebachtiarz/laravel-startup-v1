@@ -20,6 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
     <script src="{{ online_asset() }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     @include('layouts.libraries._libraries', ['_lib' => ['_forgejs', '_toasterjs']])
-    <script async defer src="/js/app/auth/register_master.min.js"></script>
+    <script async src="/js/app/auth/register_master.min.js"></script>
     <script src="/js/app/master/master_home.min.js"></script>
     <!-- </body></html> -->
