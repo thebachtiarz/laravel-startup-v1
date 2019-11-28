@@ -92,3 +92,10 @@ function createNewUserCode()
 {
     return Str::random(64);
 }
+
+function globalUrlAllowedMap($data)
+{
+    return [
+        'index' => $data['index'], 'type' => $data['type'], 'name' => $data['url_name'], 'icon' => $data['url_icon'], 'link' => $data['url_link'], 'description' => $data['url_desc']
+    ];
+}

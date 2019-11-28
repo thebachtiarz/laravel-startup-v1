@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['preventBackHistory']], function () {
     Route::post('/register', 'API\AuthController@registerNewUser');
     Route::post('/signin', 'API\AuthController@signupUser');
+    Route::get('/allowed-link', 'API\AllowedLinkController@getAllowedLink');
 });
 
 Route::group(['middleware' => ['preventBackHistory', 'auth:api']], function () {

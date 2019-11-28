@@ -11,4 +11,9 @@ class HomeController extends Controller
     {
         return view('body.home.homepage');
     }
+
+    public function products()
+    {
+        return view('body.home.products');
+    }
 }
