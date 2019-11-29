@@ -38,6 +38,8 @@
     <script src="{{ online_asset() }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="{{ online_asset() }}/dist/js/adminlte.min.js"></script>
     <script async src="/js/app/master/master_home.min.js"></script>
+    <script async defer src="/js/app/master/credentials_checker.min.js"></script>
+    <script async src="/js/app/body/home/homepage.min.js"></script>
     @include('layouts.libraries._libraries', ['_lib' => ['_toasterjs']])
     @yield('footer')
     <!-- </body></html> -->

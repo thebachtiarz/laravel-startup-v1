@@ -14,6 +14,12 @@ class DocumentationProductResources extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id_prod' => $this->id,
+            'name' => $this->name,
+            'detail' => $this->detail,
+            'created' => Carbon_diffForHumans($this->created_at),
+            'updated' => ($this->updated_at <= $this->created_at) ? 'Never updated' : Carbon_diffForHumans($this->updated_at)
+        ];
     }
 }
