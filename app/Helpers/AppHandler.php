@@ -24,7 +24,7 @@ use App\Models\User;
 # online version
 function online_asset()
 {
-    return 'http://www.bachtiars.com/AdminLTE-3.0.1';
+    return 'http://www.bachtiars.com/AdminLTE-3.0.0-rc.1';
 }
 # offline version
 function offline_asset()
