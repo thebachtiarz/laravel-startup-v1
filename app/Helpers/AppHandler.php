@@ -93,6 +93,12 @@ function createNewUserCode()
     return Str::random(64);
 }
 
+/**
+ * create allowed url for user
+ *
+ * @param array $data
+ * @return void
+ */
 function globalUrlAllowedMap($data)
 {
     return [
